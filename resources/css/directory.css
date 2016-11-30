@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+.dir_div{
+	width:102px;
+	height:140px;
+	float:left;
+	margin-right:15px;
+}
+
+.dir_img_div{
+  width:102px;
+  height:102px;
+  float:left;
+}
+
+.dir_title_div{
+	width:120px;
+	height:14px;
+	float:left;
+	text-align:center;
+}
