@@ -54,7 +54,7 @@
 							<input type="text" class="form-control" />
 						</div> 
 						<button type="submit" class="btn btn-default">搜索</button>
-						<button onclick="javascript:getMM();" type="submit" class="btn btn-default">加载图片</button>
+						<button onclick="javascript:void();" id="loadImage" type="button" class="btn btn-default">加载图片</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
@@ -132,26 +132,22 @@
 		</div>
 		<div class="col-md-4 column">
 			<div class="list-group">
-				 <a href="#" class="list-group-item active">Home</a>
+				 <a href="#" class="list-group-item active">来源</a>
 				<div class="list-group-item">
-					List header
+					<a href="#">来源地址1</a>
 				</div>
 				<div class="list-group-item">
-					<h4 class="list-group-item-heading">
-						List group item heading
-					</h4>
-					<p class="list-group-item-text">
-						...
-					</p>
+                    <a href="#">来源地址2</a>
 				</div>
 				<div class="list-group-item">
-					 <span class="badge">14</span> Help
-				</div> <a class="list-group-item active"> <span class="badge">14</span> Help</a>
+					 <a href="#">关于WebFileManager v1.0</a>
+				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div class="row clearfix">
-<div class="col-md-12 column">
+      <div class="col-md-12 column">
 			<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 				<div class="navbar-header">
 					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">WebFileManager</a>
@@ -180,20 +176,50 @@
 <script type="text/javascript" src="./plugins/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function(){
-   
+	getMM();
+    //点击目录事件
+
+
+
+
 });
 
+
+$("#loadImage").on('click',function(){
+   getMM();
+});
+
+//获取目录
 function getMM()
 {
-   var directory="F:/img/";
-   $.post('FileManager.php',{directory:directory},function(data){
-	   $("#directory").html("")
-	   $.each(data,function(key,val){
-		         alert(index);
-                 $("#directory").append('<div class="dir_div"><div class="dir_img_div"><img src="./resources/images/folder.png"></div><div class="dir_title_div"><span id="dir_title">'+data[index]+'</span></div></div>');
-		   });
-	});
+	   var directory="F:/www/images";
+       
+	   $.post('./FileManager.php',{directory:directory,action:'load'},function(data){	   
+		   $("#directory").html("");
+		   $.each(data,function(index,value){
+			   $("#directory").append('<div class="dir_div" id="dir_idv"><div class="dir_img_div"><img src="./resources/images/folder.png"></div><div class="dir_title_div"><span id="dir_title"><a href="javascript:void();" onclick="getImage(this);">'+value+'</a></span></div></div>');  
+		   });	               
+		},'json');
 }
+
+//获取目录图片
+function getImage(obj)
+{
+   var directory="F:/www/images";
+   var opendir=obj.innerText;
+   var currentdir=directory+'/'+opendir;
+   //alert(opendir);
+   
+   $.post('http://localhost/WebFileManager/FileManager.php',{directory:directory,action:'getimage',opendir:opendir},function(data){	   
+	   $("#directory").html("");
+	   $.each(data,function(index,value){
+		   $("#directory").append('<div class="dir_div" id="dir_idv"><div class="dir_img_div"><img src="../images/'+opendir+'/'+value+'" width="102px" height="102px"/></div><div class="dir_title_div"><span id="dir_title"><a href="javascript:void();" onclick="getImage(this);">'+value+'</a></span></div></div>');  
+	   });	               
+	},'json');
+
+}
+
+
 </script>
 </body>
 </html>
