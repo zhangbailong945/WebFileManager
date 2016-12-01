@@ -186,13 +186,11 @@ $(function(){
 function getMM()
 {
    var directory="F:/img/";
-   $.post('FileManager.php',{directory:directory},function(data){
-	   $("#directory").html("")
-	   $.each(data,function(key,val){
-		         alert(index);
-                 $("#directory").append('<div class="dir_div"><div class="dir_img_div"><img src="./resources/images/folder.png"></div><div class="dir_title_div"><span id="dir_title">'+data[index]+'</span></div></div>');
-		   });
-	});
+   $.post(
+      'url':'FileManager.php',
+      'data':{directory:directory},
+      ''
+   );
 }
 </script>
 </body>

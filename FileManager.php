@@ -11,6 +11,7 @@ class FileManager
          $fileList=array();
          foreach($files as $file)
          {
+         	
          	if($file=='.')
          	{
          	   continue;
@@ -30,20 +31,20 @@ class FileManager
             }
             
          }
-         $list[]=$dirList;
-         //$list[1]=$fileList;
-         $json=json_encode($dirList);
-         $json=str_replace('[', '{',$json);
-         $json=str_replace(']', '}',$json);
-         echo $json;
-         //print_r($dirList);
+
+         echo json_encode($dirList);
+         //echo $json;
      }
 }
 
 if(!empty($_POST['directory']))
 {
    $directory=$_POST['directory'];
-   $obj=new FileManager();
-   $obj->getCurrentDir($directory);
 }
+   
+$obj=new FileManager();
+echo "执行";
+$obj->getCurrentDir('E:/images');   
+   
+
 
